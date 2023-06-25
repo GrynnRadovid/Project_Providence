@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import axios from "axios";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -18,11 +19,22 @@ function Registration() {
     setEmail(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add logic to handle registration form submission
-  };
 
+    try {
+      const response = await axios.post("http://localhost:8000/api/register/", {
+        username,
+        password,
+        email,
+      });
+      console.log(response.data);
+      // Handle success
+    } catch (error) {
+      console.error(error);
+      // Handle error
+    }
+  };
   return (
     <div>
       <h1>Registration Page</h1>
