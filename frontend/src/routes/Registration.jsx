@@ -29,12 +29,13 @@ function Registration() {
         email,
       });
       console.log(response.data);
-      // Handle success
+      // Handle success, e.g., show a success message or redirect to another page
     } catch (error) {
       console.error(error);
-      // Handle error
+      // Handle error, e.g., show an error message
     }
   };
+
   return (
     <div>
       <h1>Registration Page</h1>
