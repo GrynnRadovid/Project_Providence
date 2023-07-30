@@ -1,6 +1,11 @@
-// src/Login.jsx
 import { useState } from "react";
 import axios from "axios";
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,12 +22,18 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     try {
       const response = await axios.post("http://localhost:8000/api/login/", {
-        username,
-        password,
-      });
+          username,
+          password,
+        },
+        {
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"), // Include the CSRF token in headers
+          },
+        }
+      );
       console.log(response.data);
       // Handle successful login, e.g., redirect to another page
     } catch (error) {
@@ -30,7 +41,7 @@ function Login() {
       setError("Invalid credentials. Please try again.");
     }
   };
-
+  
   return (
     <div>
       <h1>Login Page</h1>
