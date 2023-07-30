@@ -1,89 +1,66 @@
-# Project_Providence
+# Getting Started with Project Providence
 
-Backend Framework: Django (Python)
-Django provides robust authentication and authorization out-of-the-box, along with an ORM for database management.
-
-Frontend Framework: React (JavaScript)
-React is widely used for building user interfaces and can be easily integrated with Django as the backend API.
-
-Database: PostgreSQL
-PostgreSQL is a powerful, open-source relational database that works seamlessly with Django.
-
-Email Service Provider: SendGrid
-SendGrid is a widely used email service provider that integrates easily with Django and React Native.
-
-Password Hashing: bcrypt
-bcrypt is a popular password-hashing library that has implementations available for both Python and JavaScript (Node.js).
-
-Security and Validation: OWASP Java Encoder (for Java applications) express-validator (for Node.js applications)
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with REACT+VITE.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+## Frontend
+
+### `npm run dev`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload when you make edits.\
+You will also see any lint errors in the console.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `dist` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm run serve`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Serves the production-ready app from the `dist` folder on your local machine. Useful for testing the built version before deploying.
 
-### `npm run eject`
+### `npm test`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Launches the test runner in interactive watch mode.\
+See the section about [running tests](https://reactjs.org/docs/testing.html) for more information.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Backend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### `python manage.py runserver`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Starts the Django development server on [http://localhost:8000](http://localhost:8000). Use this command to see your backend changes in action.
 
-## Learn More
+### `python manage.py makemigrations`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Creates new migrations based on the changes you've made to your models.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `python manage.py migrate`
 
-### Code Splitting
+Applies migrations to your database schema.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### `python manage.py createsuperuser`
 
-### Analyzing the Bundle Size
+Creates a new superuser account for your Django application, which can be used to access the Django Admin interface.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### `python manage.py shell`
 
-### Making a Progressive Web App
+Opens the Django shell, which is an interactive Python shell with the Django environment loaded. This is useful for testing queries, interacting with the database, and more.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### `python manage.py test`
 
-### Advanced Configuration
+Run the Django test suite.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Project_Providence Details
 
-### Deployment
+**Backend Framework:** Django (Python)  
+Django provides robust authentication and authorization out-of-the-box, along with an ORM for database management.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+**Frontend Framework:** React (JavaScript)  
+React is widely used for building user interfaces and can be easily integrated with Django as the backend API.
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Database:** PostgreSQL  
+PostgreSQL is a powerful, open-source relational database that works seamlessly with Django.
