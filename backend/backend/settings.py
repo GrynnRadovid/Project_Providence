@@ -111,6 +111,9 @@ DATABASES = {
         'PASSWORD': 'providenceaccess',
         'HOST': 'localhost',
         'PORT': '5432',
+        'TEST': {
+            'NAME': 'Providence_test',
+        },
     }
 }
 
