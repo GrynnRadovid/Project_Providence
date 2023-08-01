@@ -19,7 +19,10 @@ export class AuthService {
 
   authChange = this.authChangeSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    // Initialize authentication state based on token in local storage
+    this._isAuthenticated = !!localStorage.getItem('authToken');
+  }
 
   private getCookie(name: string): string | null {
     const value = `; ${document.cookie}`;

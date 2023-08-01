@@ -21,6 +21,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     // Optionally, if your AuthService has an Observable for auth changes:
     this.authSubscription = this.authService.authChange.subscribe(isAuthenticated => {
+      console.log('Authentication state changed to:', isAuthenticated);
       this.isLoggedIn = isAuthenticated;
       if (isAuthenticated) {
         this.username = this.authService.getUsername();
