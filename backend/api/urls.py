@@ -14,4 +14,5 @@ urlpatterns = [
     path('about/', about_page, name='about-page'),
     path('contact/', contact_page, name='contact-page'),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('openid/', include('oidc_provider.urls', namespace='oidc_provider')),
 ]
