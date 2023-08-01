@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (
     UserRegistrationView,
     UserLoginView,
@@ -13,4 +13,5 @@ urlpatterns = [
     path('logout/', UserLogoutView.as_view(), name='user-logout'),
     path('about/', about_page, name='about-page'),
     path('contact/', contact_page, name='contact-page'),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
