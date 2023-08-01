@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +9,11 @@ import { LoginService } from './login.service';
 })
 
 export class LoginComponent {
-  loginForm: FormGroup;
+  loginForm: FormGroup;  // Declared here
   error: string | null = null;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+    // Initialize loginForm inside the constructor
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -23,10 +24,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
 
-      this.loginService.login(username, password).subscribe(
+      this.authService.login(username, password).subscribe(
         response => {
           console.log(response);
-          // Handle successful login, e.g., redirect to another page
           this.error = null;
         },
         err => {

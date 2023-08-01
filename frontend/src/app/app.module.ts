@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { RegistrationComponent } from './routes/registration/registration.component';
 import { LoginComponent } from './routes/login/login.component';
-import { HomeComponent } from './routes/home/home.component';
+import { MainComponent } from './routes/main/main.component';
 import { AboutComponent } from './routes/about/about.component';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { AboutComponent } from './routes/about/about.component';
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    HomeComponent,
+    MainComponent,
     AboutComponent
   ],
   imports: [

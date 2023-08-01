@@ -28,12 +28,12 @@ export class RegistrationComponent implements OnInit {
       this.registrationService.register(formData).subscribe(
         response => {
           console.log(response);
-          // Handle success, e.g., show a success message or redirect to another page
+          // Handle success
           this.error = null; // Clear any existing error messages on success
         },
         err => {
           console.error(err);
-          // Using the error message passed from the service
+          // Handle error
           this.error = err || "There was an error with registration. Please try again.";
         }
       );
