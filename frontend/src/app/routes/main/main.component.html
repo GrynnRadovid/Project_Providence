@@ -1,0 +1,13 @@
+<div class="main-container">
+  <div *ngIf="!isLoggedIn" class="login-overlay">
+    <!-- Include Login component -->
+    <app-login></app-login>
+  </div>
+
+  <div *ngIf="isLoggedIn" class="user-info">
+    Signed in as {{ username }}
+    <button (click)="logout()">Logout</button>
+  </div>
+
+  <!-- Other main page content goes here -->
+</div>
