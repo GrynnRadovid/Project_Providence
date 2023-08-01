@@ -44,6 +44,14 @@ INSTALLED_APPS = [
 ]
 
 
+# OAuth2 and OpenID Connect Configuration
+
+OIDC_RSA_KEY_FOLDER = BASE_DIR / 'oidc_rsa_keys'
+OIDC_ISSUER = 'http://localhost:8000'  
+
+AUTHENTICATION_BACKENDS = [
+    'oauth2_provider.backends.OAuth2Backend',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
 
