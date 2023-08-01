@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
-import logging
 from django import forms
 
 @api_view(['GET'])
@@ -42,8 +41,6 @@ class UserRegistrationView(APIView):
 class UserLoginView(APIView):
     def post(self, request):
         form = AuthenticationForm(data=request.data)
-        logging.debug("Received login request")
-        logging.debug(request.data)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
@@ -56,4 +53,5 @@ class UserLoginView(APIView):
 
 class UserLogoutView(LogoutView):
     def post(self, request):
-        return super().post(request)  # Call the parent class method to perform the logout
+        super().post(request)  # Call the parent class method to perform the logout
+        return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
