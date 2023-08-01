@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
 from django import forms
+from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(['GET'])
 def about_page(request):
@@ -43,13 +44,13 @@ class UserLoginView(APIView):
         form = AuthenticationForm(data=request.data)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
-            return Response({'message': 'Login successful'}, status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'token': str(refresh.access_token),
+                'username': user.username
+            }, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Login failed'}, status=status.HTTP_401_UNAUTHORIZED)
-
-    def get(self, request):
-        return Response({'message': 'Please use POST request to log in'}, status=status.HTTP_200_OK)
 
 class UserLogoutView(LogoutView):
     def post(self, request):

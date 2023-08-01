@@ -38,6 +38,21 @@ export class AuthService {
     return null;
   }
 
+  getHeaders(): HttpHeaders {
+    let headers: HttpHeaders = new HttpHeaders();
+    const csrfToken = this.getCookie('csrftoken');
+    const authToken = localStorage.getItem('authToken');
+
+    if (csrfToken) {
+        headers = headers.append('X-CSRFToken', csrfToken);
+    }
+    if (authToken) {
+        headers = headers.append('Authorization', 'Bearer ' + authToken);
+    }
+
+    return headers;
+}
+
   login(username: string, password: string): Observable<LoginResponse> {
     let headers: HttpHeaders = new HttpHeaders();
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router'; // Import Router for navigation
 
 @Component({
   selector: 'app-login',
@@ -9,11 +10,14 @@ import { AuthService } from '../../services/auth.service';
 })
 
 export class LoginComponent {
-  loginForm: FormGroup;  // Declared here
+  loginForm: FormGroup;
   error: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
-    // Initialize loginForm inside the constructor
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router  // Inject Router
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -25,13 +29,14 @@ export class LoginComponent {
       const { username, password } = this.loginForm.value;
 
       this.authService.login(username, password).subscribe(
-        response => {
-          console.log(response);
+        () => {
+          // On successful login
           this.error = null;
         },
         err => {
           console.error(err);
           this.error = 'Invalid credentials. Please try again.';
+          this.loginForm.reset();
         }
       );
     }
