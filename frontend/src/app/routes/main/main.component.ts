@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class MainComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
+  showRegistration = false;
   username: string = '';
   private authSubscription?: Subscription;
 
@@ -39,5 +40,13 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Clean up the subscription when the component gets destroyed
     this.authSubscription?.unsubscribe();
+  }
+
+  showRegistrationForm(): void {
+    this.showRegistration = true;
+  }
+
+  showLoginForm(): void {
+    this.showRegistration = false;
   }
 }
