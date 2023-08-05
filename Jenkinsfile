@@ -44,10 +44,5 @@ pipeline {
             }
         }
         
-        stage('Deploy') {
-            steps {
-                // Implement your deployment steps here, such as copying files to the server or using Docker.
-            }
-        }
     }
 }
