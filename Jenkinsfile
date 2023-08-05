@@ -22,8 +22,8 @@ pipeline {
             agent any
             steps {
                 dir('backend') {
-                    bat 'pip install -r requirements.txt'
-                    bat 'python manage.py migrate'
+                    bat 'call venv\Scripts\activate
+					python manage.py migrate'
                 }
             }
         }
