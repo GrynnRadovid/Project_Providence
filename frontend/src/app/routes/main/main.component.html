@@ -1,7 +1,15 @@
 <div class="main-container">
   <div *ngIf="!isLoggedIn" class="login-overlay">
     <!-- Include Login component -->
-    <app-login></app-login>
+    <div *ngIf="!showRegistration">
+      <app-login></app-login>
+      <p>No account yet? <a href="javascript:void(0)" (click)="showRegistrationForm()">Register here</a></p>
+    </div>
+    <!-- Include Registration component -->
+    <div *ngIf="showRegistration">
+      <app-registration></app-registration>
+      <p>Already have an account? <a href="javascript:void(0)" (click)="showLoginForm()">Log in here</a></p>
+    </div>
   </div>
 
   <div *ngIf="isLoggedIn" class="user-info">
