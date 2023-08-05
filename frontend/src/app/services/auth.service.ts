@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 interface LoginResponse {
   token: string;
@@ -14,6 +14,7 @@ interface LoginResponse {
 export class AuthService {
 
   private apiUrl = 'http://localhost:8000/api/';
+  private registerUrl = this.apiUrl + 'register/';
   public _isAuthenticated = false;
   private authChangeSubject = new Subject<boolean>();
 
@@ -88,5 +89,25 @@ export class AuthService {
 
   getUsername(): string {
     return localStorage.getItem('username') || '';
+  }
+  register(data: { username: string; password: string; email: string }): Observable<any> {
+    return this.http.post(this.registerUrl, data).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => this.handleError(error));
+      })
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): string {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else if (error.status === 400 && error.error) {
+      errorMessage = error.error.message || error.error.detail || 'Registration failed!';
+    } else {
+      errorMessage = `Server Error: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return errorMessage;
   }
 }

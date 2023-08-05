@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegistrationService } from './registration.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -11,7 +11,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   error: string | null = null;
 
-  constructor(private fb: FormBuilder, private registrationService: RegistrationService) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registrationForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -25,18 +25,18 @@ export class RegistrationComponent implements OnInit {
     if (this.registrationForm.valid) {
       const formData = this.registrationForm.value;
 
-      this.registrationService.register(formData).subscribe(
-        response => {
+      this.authService.register(formData).subscribe({
+        next: response => {
           console.log(response);
           // Handle success
           this.error = null; // Clear any existing error messages on success
         },
-        err => {
+        error: err => {
           console.error(err);
           // Handle error
           this.error = err || "There was an error with registration. Please try again.";
         }
-      );
+      });
     } else {
       this.error = "All fields are required!";
     }
