@@ -22,7 +22,7 @@ pipeline {
             agent any
             steps {
                 dir('backend') {
-                    bat 'call venv\Scripts\activate
+                    bat 'call venv\\Scripts\\activate
 					python manage.py migrate'
                 }
             }
