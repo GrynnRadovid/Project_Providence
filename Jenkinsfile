@@ -12,8 +12,8 @@ pipeline {
             agent any
             steps {
                 dir('frontend') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    bat 'npm install'
+                    bat 'npm run build'
                 }
             }
         }
@@ -22,8 +22,8 @@ pipeline {
             agent any
             steps {
                 dir('backend') {
-                    sh 'pip install -r requirements.txt'
-                    sh 'python manage.py migrate'
+                    bat 'pip install -r requirements.txt'
+                    bat 'python manage.py migrate'
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('backend') {
-                    sh 'python manage.py test'
+                    bat 'python manage.py test'
                 }
             }
         }
