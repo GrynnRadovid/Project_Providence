@@ -28,17 +28,17 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
 
-      this.authService.login(username, password).subscribe(
-        () => {
+      this.authService.login(username, password).subscribe({
+        next: () => {
           // On successful login
           this.error = null;
         },
-        err => {
+        error: err => {
           console.error(err);
           this.error = 'Invalid credentials. Please try again.';
           this.loginForm.reset();
         }
-      );
+      });
     }
   }
 }
