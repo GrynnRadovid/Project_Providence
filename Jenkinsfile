@@ -8,10 +8,10 @@ pipeline {
             }
         }
         
-        stage('Build Angular') {
+        stage('Build Frontend') {
             agent {
                 node {
-                    label 'angular'
+                    label 'ERGOKREE'
                 }
             }
             steps {
@@ -22,10 +22,10 @@ pipeline {
             }
         }
         
-        stage('Build Django') {
+        stage('Build Backend') {
             agent {
                 node {
-                    label 'django'
+                    label 'ERGOKREE'
                 }
             }
             steps {
