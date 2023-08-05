@@ -17,12 +17,20 @@ pipeline {
                 }
             }
         }
-        
-        stage('Build Backend') {
-            agent any
+        stage('Start Frontend Server') {
+            steps {
+                dir('frontend') {
+                    sh 'npx ng serve --open &'
+                    sleep 15
+                }
+            }
+        }
+		stage('Start Backend Server') {
             steps {
                 dir('backend') {
-                    bat 'call venv\\Scripts\\activate && pip install -r requirements.txt && python manage.py runserver'
+                    bat 'call venv\\Scripts\\activate && pip install -r requirements.txt'
+                    bat 'call venv\\Scripts\\activate && python manage.py migrate'
+                    bat 'call venv\\Scripts\\activate && python manage.py runserver &'
                 }
             }
         }
@@ -42,6 +50,17 @@ pipeline {
                 dir('backend') {
                     bat 'python manage.py test'
                 }
+            }
+        }
+		
+    }
+	post {
+        always {
+            dir('frontend') {
+                bat 'killall ng || true' // Stop the Frontend development server
+            }
+            dir('backend') {
+                bat 'killall python || true' // Stop the Django development server
             }
         }
     }
