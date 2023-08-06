@@ -53,8 +53,10 @@ class UserLoginViewTests(TestCase):
 
     def test_user_login(self):
         response = self.client.post(self.url, self.login_data)
+        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {'message': 'Login successful'})
+        self.assertIn('token', response.data)
+        self.assertEqual(response.data['username'], 'testuser')
 
     def test_user_login_invalid_password(self):
         self.login_data['password'] = 'wrongpassword'
