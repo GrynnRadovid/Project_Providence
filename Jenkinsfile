@@ -21,7 +21,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     sh 'npx ng serve --open &'
-                    sleep 15
+                    sleep 30
                 }
             }
         }
@@ -57,10 +57,10 @@ pipeline {
 	post {
         always {
             dir('frontend') {
-                bat 'killall ng || true' // Stop the Frontend development server
+                bat 'taskkill /F /IM ng.exe' // Stop the Frontend development server
             }
             dir('backend') {
-                bat 'killall python || true' // Stop the Django development server
+                bat 'taskkill /F /IM python.exe' // Stop the Django development server
             }
         }
     }
