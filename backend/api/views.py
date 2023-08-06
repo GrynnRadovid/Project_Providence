@@ -1,13 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from django import forms
-from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(['GET'])
 def about_page(request):
@@ -21,6 +21,7 @@ class UserRegistrationForm(forms.Form):
     username = forms.CharField(max_length=150)
     password = forms.CharField(widget=forms.PasswordInput)
     email = forms.EmailField()
+
 
 class UserRegistrationView(APIView):
     def post(self, request):
@@ -40,13 +41,16 @@ class UserRegistrationView(APIView):
             return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLoginView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         form = AuthenticationForm(data=request.data)
         if form.is_valid():
             user = form.get_user()
-            refresh = RefreshToken.for_user(user)
+
+            login(request, user) # Log the user in
+
             return Response({
-                'token': str(refresh.access_token),
+                'message': 'Login successful',
                 'username': user.username
             }, status=status.HTTP_200_OK)
         else:

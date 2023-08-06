@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'corsheaders',
+    'django_extensions',
     'api',
 ]
 
@@ -51,14 +53,22 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True # Remove in PROD
+
+SSL_CERTIFICATE = './ssl/localhost.pem'
+SSL_PRIVATE_KEY = './ssl/localhost-key.pem'
+
 CORS_ALLOWED_ORIGINS = [   
     'http://localhost:5173',
     "http://localhost:8000",
     "http://localhost:4200"
 ]
+
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',
 ]
@@ -78,6 +88,8 @@ CORS_ALLOW_HEADERS = [
     'Content-Type',
     'Origin',
     'User-Agent',
+    'content-type',
+    'x-csrftoken',
 ]
 
 REST_FRAMEWORK = {
@@ -85,23 +97,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication', 
     )
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-}
 
 ROOT_URLCONF = 'backend.urls'
 

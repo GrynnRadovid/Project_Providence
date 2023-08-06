@@ -16,29 +16,30 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    // Initialize states based on AuthService
-    this.isLoggedIn = this.authService._isAuthenticated; // Assuming isAuthenticated() checks the token or user session
-    this.username = this.authService.getUsername();  // Assuming getUsername() returns the username
-
-    // Optionally, if your AuthService has an Observable for auth changes:
-    this.authSubscription = this.authService.authChange.subscribe(isAuthenticated => {
-      console.log('Authentication state changed to:', isAuthenticated);
-      this.isLoggedIn = isAuthenticated;
-      if (isAuthenticated) {
-        this.username = this.authService.getUsername();
-      } else {
-        this.username = '';
+    this.authService.authChange.subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+      if (isLoggedIn) {
+        // Retrieve the username when logged in
+        const username = this.authService.getUsername();
+        this.username = username ? username : 'Unknown user'; // Provide a default value if username is null
       }
     });
   }
-
+  login(username: string, password: string): void {
+    this.authService.login(username, password).subscribe(response => {
+      this.username = response.username;
+      this.isLoggedIn = true;
+    }, error => {
+      // Handle login failure
+    });
+  }
   logout(): void {
     this.authService.logout();
     this.isLoggedIn = false;
+    this.username = '';
   }
 
   ngOnDestroy(): void {
-    // Clean up the subscription when the component gets destroyed
     this.authSubscription?.unsubscribe();
   }
 
