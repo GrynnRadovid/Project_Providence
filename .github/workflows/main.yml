@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Build Frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+
+    - name: Start Frontend Server (Background)
+      run: |
+        cd frontend
+        start /B npx ng serve --open
+      shell: cmd
+      continue-on-error: true
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Start Backend Server (Background)
+      run: |
+        cd backend
+        call venv\Scripts\activate
+        pip install -r requirements.txt
+        python manage.py migrate
+        start /B call venv\Scripts\activate && python manage.py runserver
+      shell: cmd
+      continue-on-error: true
+
+    - name: Cypress Tests
+      run: |
+        cd frontend
+        npx cypress run
+
+    - name: Backend Tests
+      run: |
+        cd backend
+        python manage.py test
+
+    - name: Stop Servers
+      run: |
+        powershell "Stop-Process -Id (Get-NetTCPConnection -LocalPort 4200).OwningProcess -Force"
+        powershell "Stop-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess -Force"
+      shell: powershell
+      if: always()
