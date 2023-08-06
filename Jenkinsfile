@@ -20,8 +20,8 @@ pipeline {
         stage('Start Frontend Server') {
             steps {
                 dir('frontend') {
-                    sh 'npx ng serve --open &'
-                    sleep 30
+                    bat 'cmd /c "start /B npx ng serve --open"'
+                    timeout 10
                 }
             }
         }
@@ -30,7 +30,8 @@ pipeline {
                 dir('backend') {
                     bat 'call venv\\Scripts\\activate && pip install -r requirements.txt'
                     bat 'call venv\\Scripts\\activate && python manage.py migrate'
-                    bat 'call venv\\Scripts\\activate && python manage.py runserver &'
+                    bat 'cmd /c "start /B call venv\\Scripts\\activate && python manage.py runserver"'
+					timeout 10
                 }
             }
         }
