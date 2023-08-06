@@ -58,10 +58,10 @@ pipeline {
 	post {
         always {
             dir('frontend') {
-                bat 'taskkill /F /IM ng.exe' // Stop the Frontend development server
+                bat 'powershell "Stop-Process -Id (Get-NetTCPConnection -LocalPort 4200).OwningProcess -Force"' // Stop the Frontend development server
             }
             dir('backend') {
-                bat 'taskkill /F /IM python.exe' // Stop the Django development server
+                bat 'powershell "Stop-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess -Force"' // Stop the Django development server
             }
         }
     }
