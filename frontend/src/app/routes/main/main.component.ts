@@ -8,15 +8,20 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./main.component.css'] // or .scss if you used that
 })
 export class MainComponent implements OnInit, OnDestroy {
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean;
   showRegistration = false;
   username: string = '';
   private authSubscription?: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.username = this.authService.getUsername() || 'Unknown user'; // Provide a default value if username is null
+    }
+  }
 
   ngOnInit(): void {
-    this.authService.authChange.subscribe((isLoggedIn) => {
+    this.authSubscription = this.authService.authChange.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
         // Retrieve the username when logged in
