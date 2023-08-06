@@ -38,7 +38,7 @@ export class AuthService {
     return this._username;
   }
   logout(): void {
-    localStorage.removeItem('username'); // Remove username from local storage
+    localStorage.removeItem('username');
     this._isAuthenticated = false;
     this._username = null; // Reset the username
     this.authChangeSubject.next(false);
